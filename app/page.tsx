@@ -7,15 +7,15 @@ export default function Home() {
     const router = useRouter();
 
     const encodedRiddle =
-        "Wvxm qs grmzxvzr vmxn gld, mrlz zvvql vmxn sMzMzq, vml pllL vMvZ qt, vml rLcq nZZd qt, mVd qf yLq mzv qt....yLq dqZ?";
+        "Whmx qs grmzxvzr vmhn gld, mrlz zvvql vmhn sMzMzq, vml pllL vMvZ qx, vml rLcq nZZd qx, vnd qf yLq mzv qx....yLq dqZ?";
 
     const letterHints = [
-        { from: "A", to: "M" },
-        { from: "E", to: "Z" },
-        { from: "I", to: "Q" },
-        { from: "O", to: "L" },
-        { from: "T", to: "X" },
-        { from: "H", to: "V" },
+        { from: "M", to: "A" },
+        { from: "X", to: "T" },
+        { from: "V", to: "H" },
+        { from: "Q", to: "I" },
+        { from: "L", to: "O" },
+        { from: "Z", to: "E" },
     ];
 
 
@@ -47,7 +47,7 @@ export default function Home() {
                 </h1>
 
                 <p className="text-lg text-zinc-400 mb-4">
-                    Welcome, brave bartender! Hidden within these symbols lies a riddle.
+                    Welcome, brave bartender! Hidden within these nonsense words lies a riddle.
                     Decipher the letters to reveal it.
                 </p>
 
@@ -58,7 +58,7 @@ export default function Home() {
                 </div>
 
                 <p className="text-sm text-zinc-500 mt-6 italic">
-                    Hint: Every letter has been swapped with another.
+                    Hint: Take a look around the website, there may be something hiding in the shadows...
                 </p>
 
                 {/* Answer input */}
