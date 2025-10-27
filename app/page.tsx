@@ -1,65 +1,150 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    const router = useRouter();
+
+    const encodedRiddle =
+        "Ucan nf vhmdham cafg vrl, rsdh hkvf cafg fmmgm, caf brrd choh nt, caf dncq ghhn nt, mgl nf nwh mnh nt... ngl lcn?";
+
+    const letterHints = [
+        { from: "L", to: "O" },
+        { from: "A", to: "M" },
+        { from: "G", to: "T" },
+        { from: "E", to: "H" },
+        { from: "T", to: "A" },
+        { from: "O", to: "R" },
+    ];
+
+    const [revealed, setRevealed] = useState<number[]>([]);
+    const [answer, setAnswer] = useState("");
+    const [error, setError] = useState(false);
+
+    const revealHint = (index: number) => {
+        if (!revealed.includes(index)) {
+            setRevealed([...revealed, index]);
+        }
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (answer.trim().toLowerCase() === "nothing") {
+            router.push("/UKA-winner-prize");
+        } else {
+            setError(true);
+            setTimeout(() => setError(false), 600);
+        }
+    };
+
+    return (
+        <div className="relative flex min-h-screen items-center justify-center bg-black text-white font-mono overflow-hidden">
+            <main className="flex flex-col items-center justify-center px-8 text-center max-w-2xl z-10">
+                <h1 className="text-4xl font-bold mb-8 tracking-wide text-zinc-100">
+                    🕵️‍♀️ The Cipher Challenge 🕵️‍♂️
+                </h1>
+
+                <p className="text-lg text-zinc-400 mb-4">
+                    Welcome, brave bartender! Hidden within these symbols lies a riddle.
+                    Decipher the letters to reveal it.
+                </p>
+
+                <div className="bg-zinc-900 text-zinc-200 rounded-xl p-6 mt-6 shadow-md border border-zinc-700">
+                    <p className="whitespace-pre-wrap text-lg leading-relaxed">
+                        {encodedRiddle}
+                    </p>
+                </div>
+
+                <p className="text-sm text-zinc-500 mt-6 italic">
+                    Hint: Every letter has been swapped with another.
+                </p>
+
+                {/* Answer input */}
+                <form
+                    onSubmit={handleSubmit}
+                    className={`mt-12 flex flex-col sm:flex-row gap-3 items-center transition-transform ${
+                        error ? "animate-shake" : ""
+                    }`}
+                >
+                    <input
+                        type="text"
+                        placeholder="Type your answer..."
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        className="px-4 py-2 rounded-md bg-white text-black w-56 text-center outline-none border border-zinc-500 focus:border-zinc-300 focus:ring-2 focus:ring-zinc-400 transition"
+                    />
+                    <button
+                        type="submit"
+                        className="rounded-md bg-zinc-100 text-black px-5 py-2 font-semibold hover:bg-zinc-300 transition"
+                    >
+                        Submit
+                    </button>
+                </form>
+
+                {error && (
+                    <p className="text-red-500 mt-3 text-sm">
+                        ❌ That’s not it. Try again!
+                    </p>
+                )}
+            </main>
+
+            {/* Visible Easter Egg Hints */}
+            {letterHints.map((hint, index) => {
+                // Define fixed positions for each hint
+                const positions = [
+                    { top: "5%", left: "5%" }, // top-left corner
+                    { top: "5%", right: "5%" }, // top-right corner
+                    { bottom: "10%", left: "10%" }, // bottom-left
+                    { bottom: "10%", right: "10%" }, // bottom-right
+                    { top: "30%", left: "50%", transform: "translateX(-50%)" }, // over title
+                    { top: "70%", left: "50%", transform: "translateX(-50%)" }, // lower middle
+                ];
+
+                const pos = positions[index % positions.length];
+
+                return (
+                    <button
+                        key={index}
+                        onClick={() => revealHint(index)}
+                        className={`
+        fixed opacity-5 hover:opacity-100 transition-opacity duration-300
+        text-sm text-zinc-400 border border-zinc-600 px-2 py-1 rounded-md
+        hover:text-white hover:border-zinc-300 bg-zinc-800/40 backdrop-blur-sm z-50
+      `}
+                        style={pos}
+                    >
+                        🔒
+                        {revealed.includes(index) && (
+                            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-zinc-800 text-zinc-200 px-2 py-1 rounded text-xs border border-zinc-700">
+          {hint.from} → {hint.to}
+        </span>
+                        )}
+                    </button>
+                );
+            })}
+
+
+            {/* Shake animation */}
+            <style jsx>{`
+                @keyframes shake {
+                    0%,
+                    100% {
+                        transform: translateX(0);
+                    }
+                    20%,
+                    60% {
+                        transform: translateX(-10px);
+                    }
+                    40%,
+                    80% {
+                        transform: translateX(10px);
+                    }
+                }
+                .animate-shake {
+                    animation: shake 0.5s ease;
+                }
+            `}</style>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    );
 }
