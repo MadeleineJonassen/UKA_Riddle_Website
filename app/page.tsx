@@ -7,16 +7,18 @@ export default function Home() {
     const router = useRouter();
 
     const encodedRiddle =
-        "Whmx qs grmzxvzr vmhn gld, mrlz zvvql vmhn sMzMzq, vml pllL vMvZ qx, vml rLcq nZZd qx, vnd qf yLq mzv qx....yLq dqZ?";
+        "Whkx qs gjzkxzj xhkn gbd, mbjz zvql xhkn skxkn, xhz pbbj hkvz qx, xhz jqch nzzd qx, knd qf ybu zkx qx....ybu dqz?";
 
     const letterHints = [
-        { from: "M", to: "A" },
-        { from: "X", to: "T" },
-        { from: "V", to: "H" },
-        { from: "Q", to: "I" },
-        { from: "L", to: "O" },
-        { from: "Z", to: "E" },
+        { from: "k", to: "A" },
+        { from: "x", to: "T" },
+        { from: "z", to: "E" },
+        { from: "q", to: "I" },
+        { from: "b", to: "O" },
+        { from: "j", to: "R" },
     ];
+
+
 
 
     const [revealed, setRevealed] = useState<number[]>([]);
@@ -124,7 +126,6 @@ export default function Home() {
                     </button>
                 );
             })}
-
 
             {/* Shake animation */}
             <style jsx>{`
