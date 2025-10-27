@@ -7,16 +7,17 @@ export default function Home() {
     const router = useRouter();
 
     const encodedRiddle =
-        "Ucan nf vhmdham cafg vrl, rsdh hkvf cafg fmmgm, caf brrd choh nt, caf dncq ghhn nt, mgl nf nwh mnh nt... ngl lcn?";
+        "Wvxm qs grmzxvzr vmxn gld, mrlz zvvql vmxn sMzMzq, vml pllL vMvZ qt, vml rLcq nZZd qt, mVd qf yLq mzv qt....yLq dqZ?";
 
     const letterHints = [
-        { from: "L", to: "O" },
         { from: "A", to: "M" },
-        { from: "G", to: "T" },
-        { from: "E", to: "H" },
-        { from: "T", to: "A" },
-        { from: "O", to: "R" },
+        { from: "E", to: "Z" },
+        { from: "I", to: "Q" },
+        { from: "O", to: "L" },
+        { from: "T", to: "X" },
+        { from: "H", to: "V" },
     ];
+
 
     const [revealed, setRevealed] = useState<number[]>([]);
     const [answer, setAnswer] = useState("");
